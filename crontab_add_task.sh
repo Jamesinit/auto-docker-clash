@@ -10,4 +10,4 @@ reload_cron_time="2 6 * * *"
 
 # 将 cron 作业添加到 crontab 文件中
 (crontab -l ; echo "$parse_cron_time /usr/bin/python3  $dir_path/$script_name") |crontab -
-(crontab -l ; echo "$reload_cron_time /usr/bin/zsh  cd $dir_path && docker compose -f docker-compose-clash.yml restart ") |crontab -
+(crontab -l ; echo "$reload_cron_time /usr/bin/zsh  cd $dir_path && docker compose -f docker-compose.yml restart ") |crontab -
