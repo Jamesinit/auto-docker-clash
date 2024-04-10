@@ -1,11 +1,5 @@
-version: '3.9'
+version: "3.8"
 services:
-  subconverter:
-    image: tindy2013/subconverter:latest
-    container_name: subconverter
-    ports:
-      - "15051:25500"
-    restart: always
    # Clash
   clash:
     image: dreamacro/clash:latest
@@ -16,8 +10,6 @@ services:
       - "7890:7890/tcp"
       - "7890:7890/udp"
       - "9090:9090"
-    depends_on:
-      - subconverter
     restart: always
 
   clash-dashboard:

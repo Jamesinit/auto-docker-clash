@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  subconverter:
+    image: tindy2013/subconverter:latest
+    container_name: subconverter
+    ports:
+      - "15051:25500"
+    restart: always
