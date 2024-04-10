@@ -109,8 +109,7 @@ def change_clash_contrl_args():
 if __name__ == "__main__":
     # Read your Subscription from your file,that need you create by your hand.
     with open(".secret",mode='r') as f:    
-        sub_url= f.readline()
-
+        sub_url= f.readline().strip()
     parse_url(sub_url)
     
     change_clash_contrl_args()

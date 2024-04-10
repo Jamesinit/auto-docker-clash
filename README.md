@@ -18,23 +18,38 @@ So, I decided to write a script with other open-source tools to complete the fun
 2. Create a '.secret', then paste it into. e.g: `https://efshop.cc/api/v1/client/subscribe?token=kjhjkfhaljfaujfjahsdlfjhaljdf`
 (By the way, the `efshop.cc` is my used, it's a very cheap vpn service.
 If you want to use it like me,you can use my invite url:https://www.easyfastcloud.com/#/register?code=m3YpqOCB You will get a discount)
-1. Open `ParseSubscribe.py`, locate 'root_path' change your save path.
 
-2. Default clash.yaml uses mixed-port 7890,9090 as the control port,passward is 12341234. if you want to change it you need to change `docker-compose.yml` and `ParseSubscribe.py` 
+3. Default clash.yaml uses mixed-port 7890,9090 as the control port,passward is 12341234. if you want to change it you need to change `docker-compose.yml` and `ParseSubscribe.py` 
 (If you don't care above skip the step.)
 
-1. RUN `./up.sh`
+4. RUN `./up.sh`
 
-2. Open '192.168.11.1(Use your Ip):7880' on the web to check the web_clash status.
+5. Open '192.168.11.1(Use your Ip):7880' on the web to check the web_clash status.
    1. Ip: your ip.
    2. prot:9090
    3. passward:12341234
 
-3. add auto-update
-   1. You need to change the executable file path on the file `crontab_add_task.sh`
-   2. Maybe you need to install crontab first. You can use the command `sudo apt install cron` if you are on Ubuntu.
-   3. run `crontab_add_task.sh` on your shell.
-   4. checkout cron task by `cron-l`
+6. `up.sh`will auto add timing tash by crontab_add_tash.sh.
+   if  failed or cron command not found please install cron then manual run the script
+
+
+# Trouble Shoot
+- Pull image error.(Please update docker damen config`/etc/docker/damen.json)
+```json
+{
+    "registry-mirrors" : [
+    "https://dockerproxy.com",
+    "https://docker.mirrors.ustc.edu.cn",
+    "https://docker.nju.edu.cn",
+    "https://registry.docker-cn.com",
+    "http://hub-mirror.c.163.com",
+    "https://cr.console.aliyun.com",
+    "https://mirror.ccs.tencentyun.com"
+  ]
+}
+```
+**Don't forget restart docker.**
+`sudo systemctl restart docker`
 
 # Others
 
