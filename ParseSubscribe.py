@@ -7,8 +7,9 @@ import requests
 from urllib.parse import quote
 import os
 
+config_dir = './configs/'
+
 #----------Your need modification place------
-root_path = './configs/'
 
 # Your subscription conversion server
 # Don't need to change if you wille use the default doker-compse.yml
@@ -84,7 +85,7 @@ def parse_url(sub_url):
         # if don't know you target type ,comment it get all result.
         if item == 'clash':
             req_url=f"{conversion_url_path}target={item}&url={encoded_url}"
-            transtorm(req_url,root_path+item+'.yaml')
+            transtorm(req_url,config_dir+item+'.yaml')
             break
 
 def change_clash_contrl_args():
@@ -92,14 +93,14 @@ def change_clash_contrl_args():
     Fn: chage mixed-port, external-controller ,password
     Just for clash
     '''
-    with open(root_path+"clash.yaml",mode='r') as f:
+    with open(config_dir+"clash.yaml",mode='r') as f:
         lines = f.readlines()
     # Attention  I directly use fixed number as position for locate action.
     # Just a simple script,I don't want to make it complex. I'm too lazy !
     lines[0]='mixed-port: 7890\n'
     del lines[1]
     lines[4]="external-controller: '0.0.0.0:9090'\nsecret: '12341234'\n"
-    with open(root_path+"clash.yaml",mode='w') as f:
+    with open(config_dir+"clash.yaml",mode='w') as f:
         f.writelines(lines)
 
     
