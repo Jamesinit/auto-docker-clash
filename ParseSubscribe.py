@@ -10,7 +10,7 @@ import os
 #----------Your need modification place------
 # Output config directory path
 # Please use an absolute directory path for the timing task. Next, use crontab to complete the automated workflow.
-root_path = '/home/vv/clash/configs/'
+root_path = '/home/vvw/auto-docker-clash/configs/'
 
 # Your subscription conversion server
 # Don't need to change if you wille use the default doker-compse.yml
