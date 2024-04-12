@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# 设置 Python 脚本路径
-dir_path='/home/vvw/auto-docker-clash'
+dir_path=$(head -n 1 ./.path.tmp)
+
 script_name="parse_cron.sh"
 # 设置 cron 作业的执行时间（在凌晨 6 点执行）
 parse_cron_time="0 6 * * *"

@@ -2,3 +2,4 @@ configs/*.json
 configs/*.yaml
 .secret
 **.log
+.path.tmp
