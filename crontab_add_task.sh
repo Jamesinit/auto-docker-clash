@@ -1,6 +1,6 @@
 #!/bin/bash
 # get root dirpath from parent script  by source commad
-c_path=$(PWD)
+c_path=${PWD}
 script_name="parse_cron.sh"
 # 设置 cron 作业的执行时间（在凌晨 6 点执行）
 parse_cron_time="0 6 * * *"
