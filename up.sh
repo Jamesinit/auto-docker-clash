@@ -15,16 +15,6 @@ if [ ! -f "$url_file" ]; then
 fi
 
 workdir=$(echo ${PWD})
-configs_absolute_path=$(cd ${dir_config} && echo $PWD && cd ..)
-
-# echo ${PWD}
-#==========Replace absolute path for other script
-# echo ${configs_absolute_path}
-# Using sed to replace the value after root_path=
-# echo ${workdir}
-# sed -i "s|^\(dir_path=\).*|\1'$workdir'|" crontab_add_task.sh
-# change the crontask script
-# sed -i "s|^\(work_space=\).*|\1'$workdir/'|" parse_cron.sh
 
 #==========Start Dokcer Containers
 #docker container Names
