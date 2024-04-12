@@ -16,7 +16,6 @@ fi
 
 workdir=$(echo ${PWD})
 configs_absolute_path=$(cd ${dir_config} && echo $PWD && cd ..)
-echo ${workdir}>>.path.tmp
 
 # echo ${PWD}
 #==========Replace absolute path for other script
