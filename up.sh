@@ -18,9 +18,9 @@ fi
 configs_absolute_path=$(cd ${dir_config} && echo $PWD && cd ..)
 # echo ${configs_absolute_path}
 # Using sed to replace the value after root_path=
-# workdir=$(echo ${PWD})
+workdir=$(echo ${PWD})
 # echo ${workdir}
-# sed -i "s|^\(dir_path=\).*|\1'$workdir'|" crontab_add_task.sh
+sed -i "s|^\(dir_path=\).*|\1'$workdir'|" crontab_add_task.sh
 # change the crontask script
 sed -i "s|^\(work_space=\).*|\1'$configs_absolute_path/'|" parse_cron.sh
 
