@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dir_path=$(head -n 1 ./.path.tmp)
+dir_path=$(dirname "$0")
 
 cd ${dir_path} || exit
 # run convert server
