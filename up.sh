@@ -14,15 +14,17 @@ if [ ! -f "$url_file" ]; then
 	exit
 fi
 
-#==========Replace absolute path for other script
+workdir=$(echo ${PWD})
 configs_absolute_path=$(cd ${dir_config} && echo $PWD && cd ..)
+# echo ${PWD}
+#==========Replace absolute path for other script
 # echo ${configs_absolute_path}
 # Using sed to replace the value after root_path=
-workdir=$(echo ${PWD})
 # echo ${workdir}
 sed -i "s|^\(dir_path=\).*|\1'$workdir'|" crontab_add_task.sh
 # change the crontask script
-sed -i "s|^\(work_space=\).*|\1'$configs_absolute_path/'|" parse_cron.sh
+sed -i "s|^\(work_space=\).*|\1'$workdir/'|" parse_cron.sh
+exit
 
 #==========Start Dokcer Containers
 #docker container Names
@@ -45,6 +47,7 @@ sleep 1
 python3 ./ParseSubscribe.py
 # Detect whether the config file is successfully downloaded
 if [ $? -eq 0 ]; then
+	docker compose -f ./docker-compose-subconverter.yml down
 	#Detect whether the clash container  is running
 	if docker ps --format '{{.Names}}' | grep -q "^$clash_container\$"; then
 		echo "Container $clash_container is running"
@@ -53,4 +56,6 @@ if [ $? -eq 0 ]; then
 		docker compose -f docker-compose.yml up -d
 		source crontab_add_task.sh
 	fi
+else
+	echo "Parse Subscription Error"
 fi
