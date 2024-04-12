@@ -24,7 +24,6 @@ configs_absolute_path=$(cd ${dir_config} && echo $PWD && cd ..)
 sed -i "s|^\(dir_path=\).*|\1'$workdir'|" crontab_add_task.sh
 # change the crontask script
 sed -i "s|^\(work_space=\).*|\1'$workdir/'|" parse_cron.sh
-exit
 
 #==========Start Dokcer Containers
 #docker container Names
