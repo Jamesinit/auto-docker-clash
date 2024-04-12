@@ -8,7 +8,7 @@ cd ${work_space} || exit
 docker compose -f ./docker-compose-subconverter.yml  up -d >/dev/null 2>&1
 sleep 1
 #Get new config
-python3 ParseSubscribe.py >./log/parse.log
+python3 ParseSubscribe.py >./log/parse.log 
 # down convert server
 docker compose -f ./docker-compose-subconverter.yml down >/dev/null 2>&1
 #Restart clash docker
