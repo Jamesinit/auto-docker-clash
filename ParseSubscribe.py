@@ -1,8 +1,3 @@
-from ast import If
-from logging import config
-from os import write
-from time import sleep
-from more_itertools import last
 import requests
 from urllib.parse import quote
 import os

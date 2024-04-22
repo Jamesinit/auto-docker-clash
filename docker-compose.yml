@@ -13,7 +13,7 @@ services:
     restart: always
 
   clash-dashboard:
-    image: centralx/clash-dashboard
+    image:  haishanh/yacd:latest
     container_name: clash-dashboard
     ports:
       - "7880:80"
