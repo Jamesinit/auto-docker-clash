@@ -1,43 +1,50 @@
 # auto-docker-clash
 
-I usually use Docker Clash on my local Linux machine.
+> [!TIP]
+>
+> I usually use Docker Clash on my local Linux machine, but in many cases, Docker Clash does not automatically update subscriptions and even cannot parse subscriptions by itself. Normally, we need to upload our subscription to other websites and get the real file (subscription conversion). This is very risky behavior, so I decided to write a tool that can complete the above operations with one click using other open source tools, which is `auto-docker-clash`. It can:
 
-But many Docker Clash without an auto-update subscription function and web control interface.
+- Parse URL and automatically update on a schedule
+- One-click start with Docker
+- Information security (You can find the `encode URL` function in the py script, so there is no need to upload the subscription URL to unknown sites. You only need to run a conversion container and convert the URL to get the real configuration file locally, thus ensuring the security of the subscription)
 
-Can't even parse subscription by themself. (ˉ▽ˉ；)...
+# How to use
 
-Your need on other web upload your subscription and get the real file, that's very dangerous behavior.
+> [!CAUTION]
+>
+> This project requires a docker and docker-compose environment [E.X. Ubuntu installation of Docker, Docker-compose](#installing-dockerdocker-compose-on-ubuntu)
 
-So, I decided to write a script with other open-source tools to complete the function that can parse the URL and auto-update by timing.
+1. Get the repo `git clone https://github.com/Jamesinit/auto-docker-clash.git --depth=1 && cd auto-docker-clash`
+2. Install dependencies `pip install -r requirements.txt`
+3. After copying your subscription URL, create a `.secret` file in the root directory of the project, then paste your subscription link into it: e.g.: https://efshop.cc/api/v1/client/subscribe?token=kjhjkfhaljfaujfjahsdlfjhaljdf
 
+> [!NOTE]
+>
+> p.s. By the way, efshop.cc, which I have used, is a very affordable and useful VPN service supporting OpenAI, streaming media unlocking, etc. If you also want to use it like me, you can use my invitation link: https://www.easyfastcloud.com/#/register?code=m3YpqOCB
+> You will get a discount.
 
-# How to use it
+4. `auto-docker-clash` by default uses mixed ports `7890, 9090` as the control port, with the password `12341234`. If you want to change it, you need to modify `docker-compose.yml` and `ParseSubscribe.py` (If you don't care about the above, please skip this step)
+5. RUN `./start.sh`
+6. Open `ip:7880` in a browser e.g.: `192.168.11.1:7880`, to access the web interface and check the web_clash status
 
-1. Copy your subscription URL 
+   - **ip**: your ip.
 
-2. Create a '.secret', then paste it into. e.g: `https://efshop.cc/api/v1/client/subscribe?token=kjhjkfhaljfaujfjahsdlfjhaljdf`
-(By the way, the `efshop.cc` is my used, it's a very cheap vpn service.
-If you want to use it like me,you can use my invite url:https://www.easyfastcloud.com/#/register?code=m3YpqOCB You will get a discount)
+   - **port**: 9090
 
-3. Default clash.yaml uses mixed-port 7890,9090 as the control port,passward is 12341234. if you want to change it you need to change `docker-compose.yml` and `ParseSubscribe.py` 
-(If you don't care above skip the step.)
+   - **password**: 12341234
 
-4. RUN `./up.sh`
+7. `start.sh` will automatically add a scheduled `task` through `crontab_add_task.sh`.
+   p.s. If it fails or the `cron` command is not found, please install `cron`, e.g.: `sudo apt install cron` then manually run the script
 
-5. Open '192.168.11.1(Use your Ip):7880' on the web to check the web_clash status.
-   1. Ip: your ip.
-   2. prot:9090
-   3. passward:12341234
+# roubleshooting
 
-6. `up.sh`will auto add timing tash by crontab_add_tash.sh.
-   if  failed or cron command not found please install cron then manual run the script
+## Pull image error.
 
+> Please update docker daemon config `/etc/docker/daemon.json`
 
-# Trouble Shoot
-- Pull image error.(Please update docker damen config`/etc/docker/damen.json)
-```json
+```sh
 {
-    "registry-mirrors" : [
+  "registry-mirrors": [
     "https://dockerproxy.com",
     "https://docker.mirrors.ustc.edu.cn",
     "https://docker.nju.edu.cn",
@@ -48,11 +55,69 @@ If you want to use it like me,you can use my invite url:https://www.easyfastclou
   ]
 }
 ```
-**Don't forget restart docker.**
-`sudo systemctl restart docker`
 
-# Others
+> [!CAUTION]
+>
+> **Don't forget to restart docker** `sudo systemctl restart docker`
 
-You can find the endcode URL function in the py script,so you don't need to upload your subscription URL to an unknown website.
-You can just run a conversion container and convert the URL to get real Config file work locally to keep your subscription safe.
-**If you have any questions please comment with politeness**
+## Installing Docker, Docker-compose on Ubuntu
+
+Ubuntu https://docs.docker.com/engine/install/ubuntu
+
+1. Run the following command to uninstall all conflicting packages:
+
+```sh
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+```
+
+2. Set up Docker's apt repository.
+
+```sh
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release and echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+3. Install the latest version
+
+```sh
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+4. Add group (Optional)
+
+```sh
+sudo groupadd docker
+sudo usermod -aG docker $USER
+```
+
+5. Set to start on boot
+
+```sh
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+```
+
+6. Install docker-compose
+
+> [!CAUTION]
+> Generally, docker compose should already be installed through the above steps. You can check with `docker compose version`. If not, then manually install it.
+
+[Docker Compose v2.26.1](https://github.com/docker/compose/releases/tag/v2.26.1)
+
+```sh
+cp docker-compose /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+docker-compose --version
+```
