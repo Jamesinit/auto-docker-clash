@@ -2,3 +2,9 @@ configs/*.json
 configs/*.yaml
 .secret
 **.log
+
+#created by cbq
+.idea
+*.iml
+log
+configs
